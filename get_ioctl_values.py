@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+from ioctl.dvb import (
+    FE_SET_TONE,
+    FE_SET_VOLTAGE,
+    FE_ENABLE_HIGH_LNB_VOLTAGE,
+    FE_DISEQC_SEND_MASTER_CMD,
+    FE_DISEQC_RECV_SLAVE_REPLY,
+)
+
+print("ioctl values calculated in Python:")
+print("FE_SET_TONE: 0x%x" % FE_SET_TONE)
+print("FE_SET_VOLTAGE: 0x%x" % FE_SET_VOLTAGE)
+print("FE_ENABLE_HIGH_LNB_VOLTAGE: 0x%x" % FE_ENABLE_HIGH_LNB_VOLTAGE)
+print("FE_DISEQC_SEND_MASTER_CMD: 0x%x" % FE_DISEQC_SEND_MASTER_CMD)
+print("FE_DISEQC_RECV_SLAVE_REPLY: 0x%x" % FE_DISEQC_RECV_SLAVE_REPLY)
