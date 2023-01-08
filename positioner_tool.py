@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Send DiSEqC commands to polar/azimuth positioner."""
 from argparse import ArgumentParser
-from logging import DEBUG
+from logging import getLogger, DEBUG
 from struct import unpack
 from time import sleep
 
@@ -85,7 +85,7 @@ def main():
     """Parse command line arguments and send commands to positioner."""
     arguments = parse_arguments()
     if arguments.verbose:
-        LOGGER.level = DEBUG
+        getLogger().level = DEBUG
 
     dvb_frontend = "/dev/dvb/adapter%d/frontend%d" % (
         arguments.adapter,

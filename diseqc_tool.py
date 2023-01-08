@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Send custom DiSEqC commands and receive replies."""
 from argparse import ArgumentParser
-from logging import DEBUG
+from logging import getLogger, DEBUG
 from time import sleep
 
 from common import configure_logging, Fragile
@@ -71,7 +71,7 @@ def main():
     """Parse command line arguments and send the specified DiSEqC command."""
     arguments = parse_arguments()
     if arguments.verbose:
-        LOGGER.level = DEBUG
+        getLogger().level = DEBUG
 
     dvb_frontend = "/dev/dvb/adapter%d/frontend%d" % (
         arguments.adapter,
