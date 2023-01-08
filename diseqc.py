@@ -86,32 +86,32 @@ def send_diseqc_command(dvb_frontend_file, diseqc_command):
     # trim leading null bytes
     leading_null_bytes = 0
     for command_byte in command_bytes:
-        if command_byte != "\0":
+        if command_byte != 0:
             break
         leading_null_bytes += 1
 
     # and add the same number of null bytes to the end
-    command_bytes = command_bytes[leading_null_bytes:] + b"\0" * leading_null_bytes
+    command_bytes = command_bytes[leading_null_bytes:] + bytes(leading_null_bytes)
 
     command_bytes_representation = " ".join(
-        "%.2x" % ord(command_byte) for command_byte in command_bytes
+        "%.2x" % command_byte for command_byte in command_bytes
     )
 
     LOGGER.info("Sending DiSEqC command %s", command_bytes_representation)
     LOGGER.debug(
         "Parsed DiSEqC command: "
         "framing: %.2x, address: %.2x, command: %.2x, argument: %.2x %.2x %.2x",
-        *(ord(command_byte) for command_byte in command_bytes)
+        *(command_byte for command_byte in command_bytes)
     )
 
     payload = pack(
         DVB_DISEQC_MASTER_CMD_FORMAT,
-        ord(command_bytes[0]),
-        ord(command_bytes[1]),
-        ord(command_bytes[2]),
-        ord(command_bytes[3]),
-        ord(command_bytes[4]),
-        ord(command_bytes[5]),
+        command_bytes[0],
+        command_bytes[1],
+        command_bytes[2],
+        command_bytes[3],
+        command_bytes[4],
+        command_bytes[5],
         6 - leading_null_bytes,
     )
     try:
@@ -170,7 +170,7 @@ def receive_diseqc_reply(dvb_frontend_file, receive_timeout):
         return
 
     message_representation = " ".join(
-        "%.2x" % ord(message_byte) for message_byte in message_bytes
+        "%.2x" % message_byte for message_byte in message_bytes
     )
     LOGGER.info(
         "Received DiSEqC reply of length %d: %s",
